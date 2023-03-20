@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect, NavLink } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, Route, Redirect, NavLink, createRoutesFromChildren, createRoutesFromElements, Router } from "react-router-dom";
 
 import { AppointmentsPage } from "./containers/appointmentsPage/AppointmentsPage";
 import { ContactsPage } from "./containers/contactsPage/ContactsPage";
@@ -10,16 +10,18 @@ function App() {
   contacts and appointments 
   */
 
-  const ROUTES = {
-    CONTACTS: "/contacts",
-    APPOINTMENTS: "/appointments",
-  };
+  const router = createBrowserRouter(createRoutesFromElements(
+    <Route path="/" element={ <ContactsPage /> } >
+      <Route path='/contacts' element={ <ContactsPage /> } />
+      <Route path="/appointments" element={ <AppointmentsPage /> } />
+    </Route>
+  ))
 
   /*
   Implement functions to add data to
   contacts and appointments
   */
-
+/* Adapt RouterProvider on the return */
   return (
     <>
       <nav>
@@ -31,6 +33,7 @@ function App() {
         </NavLink>
       </nav>
       <main>
+        <RouterProvider router={ router } />
         <Switch>
           <Route exact path="/">
             <Redirect to={ROUTES.CONTACTS} />
